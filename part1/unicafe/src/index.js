@@ -16,19 +16,7 @@ const App = () => {
                 text={"neutral"}
             />
             <Button handleClick={() => setBad(bad + 1)} text={"bad"} />
-            <h2>statistics</h2>
-            <Statistic text={"good"} value={good} />
-            <Statistic text={"neutral"} value={neutral} />
-            <Statistic text={"bad"} value={bad} />
-            <Statistic text={"all"} value={good + neutral + bad} />
-            <Statistic
-                text={"average"}
-                value={(good - bad) / (good + neutral + bad)}
-            />
-            <Statistic
-                text={"positive"}
-                value={(good / (good + neutral + bad)) * 100 + " %"}
-            />
+            <Statistics good={good} neutral={neutral} bad={bad} />
         </div>
     );
 };
@@ -42,5 +30,20 @@ const Statistic = ({ text, value }) => (
         {text} {value}
     </p>
 );
+
+const Statistics = ({ good, neutral, bad }) => {
+    const sum = good + neutral + bad;
+    return (
+        <>
+            <h2>statistics</h2>
+            <Statistic text={"good"} value={good} />
+            <Statistic text={"neutral"} value={neutral} />
+            <Statistic text={"bad"} value={bad} />
+            <Statistic text={"all"} value={sum} />
+            <Statistic text={"average"} value={(good - bad) / sum} />
+            <Statistic text={"positive"} value={(good / sum) * 100 + " %"} />
+        </>
+    );
+};
 
 ReactDOM.render(<App />, document.getElementById("root"));
