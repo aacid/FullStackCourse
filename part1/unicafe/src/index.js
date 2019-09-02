@@ -33,6 +33,7 @@ const Statistic = ({ text, value }) => (
 
 const Statistics = ({ good, neutral, bad }) => {
     const sum = good + neutral + bad;
+    if (sum === 0) return <p>No feedback given.</p>;
     return (
         <>
             <h2>statistics</h2>
