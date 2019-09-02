@@ -17,9 +17,18 @@ const App = () => {
             />
             <Button handleClick={() => setBad(bad + 1)} text={"bad"} />
             <h2>statistics</h2>
-            <Feedback text={"good"} value={good} />
-            <Feedback text={"neutral"} value={neutral} />
-            <Feedback text={"bad"} value={bad} />
+            <Statistic text={"good"} value={good} />
+            <Statistic text={"neutral"} value={neutral} />
+            <Statistic text={"bad"} value={bad} />
+            <Statistic text={"all"} value={good + neutral + bad} />
+            <Statistic
+                text={"average"}
+                value={(good - bad) / (good + neutral + bad)}
+            />
+            <Statistic
+                text={"positive"}
+                value={(good / (good + neutral + bad)) * 100 + " %"}
+            />
         </div>
     );
 };
@@ -28,7 +37,7 @@ const Button = ({ handleClick, text }) => (
     <button onClick={handleClick}>{text}</button>
 );
 
-const Feedback = ({ text, value }) => (
+const Statistic = ({ text, value }) => (
     <p>
         {text} {value}
     </p>
