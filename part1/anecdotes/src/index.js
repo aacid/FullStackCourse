@@ -25,6 +25,12 @@ const App = ({ anecdotes }) => {
                 }}
                 text={"next anecnote"}
             />
+            <h1>Anecdote with most votes</h1>
+
+            <Anecnote
+                text={anecdotes[votes.indexOf(Math.max(...votes))]}
+                votes={Math.max(...votes)}
+            />
         </div>
     );
 };
