@@ -1,21 +1,29 @@
 import React, { useState } from "react";
 import ReactDOM from "react-dom";
 
-const App = props => {
+const App = ({ anecdotes }) => {
     const [selected, setSelected] = useState(0);
+    const [votes, setVotes] = useState(Array(anecdotes.length).fill(0));
 
     return (
         <div>
-            <div>{props.anecdotes[selected]}</div>
+            <h1>Anecdote of the day</h1>
+            <Anecnote text={anecdotes[selected]} votes={votes[selected]} />
             <Button
                 handleClick={() => {
-                    const num = Math.floor(
-                        Math.random() * props.anecdotes.length
-                    );
-                    console.log("random number:", num);
-                    setSelected(num);
+                    const updatedVotes = [...votes];
+                    updatedVotes[selected] += 1;
+                    setVotes(updatedVotes);
                 }}
-                text={"next"}
+                text="vote"
+            />
+            <Button
+                handleClick={() => {
+                    const index = Math.floor(Math.random() * anecdotes.length);
+                    console.log("random number:", index);
+                    setSelected(index);
+                }}
+                text={"next anecnote"}
             />
         </div>
     );
@@ -23,6 +31,13 @@ const App = props => {
 
 const Button = ({ handleClick, text }) => (
     <button onClick={handleClick}>{text}</button>
+);
+
+const Anecnote = ({ text, votes }) => (
+    <div>
+        <p>{text}</p>
+        <p>has {votes} votes</p>
+    </div>
 );
 
 const anecdotes = [
