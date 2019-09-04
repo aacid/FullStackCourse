@@ -32,37 +32,40 @@ const App = () => {
     );
 };
 
-const Header = props => {
+const Header = ({ course }) => {
     return (
         <>
-            <h1>{props.course}</h1>
+            <h1>{course}</h1>
         </>
     );
 };
 
-const Content = props => {
-    const content = props.parts.map(part => (
+const Content = ({ parts }) => {
+    const content = parts.map(part => (
         <Part name={part.name} exercises={part.exercises} key={part.id} />
     ));
     return content;
 };
 
-const Part = props => {
+const Part = ({ name, exercises }) => {
     return (
         <p>
-            {props.name} {props.exercises}
+            {name} {exercises}
         </p>
     );
 };
 
-const Total = props => {
+const Total = ({ parts }) => {
     return (
         <>
             <p>
-                Number of exercises{" "}
-                {props.parts
-                    .map(part => part.exercises)
-                    .reduce((sum, val) => sum + val)}
+                <b>
+                    {"total number of " +
+                        parts
+                            .map(part => part.exercises)
+                            .reduce((sum, val) => sum + val) +
+                        " exercises"}
+                </b>
             </p>
         </>
     );
