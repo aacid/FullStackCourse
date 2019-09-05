@@ -6,10 +6,14 @@ const App = () => {
 
     const handleSubmit = event => {
         event.preventDefault();
-        const newPerson = { name: newName };
-        const newList = persons.concat(newPerson);
-        setPersons(newList);
-        setNewName("");
+        if (persons.some(p => p.name === newName)) {
+            alert(`${newName} is already added.`);
+        } else {
+            const newPerson = { name: newName };
+            const newList = persons.concat(newPerson);
+            setPersons(newList);
+            setNewName("");
+        }
     };
 
     return (
