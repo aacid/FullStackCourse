@@ -2,10 +2,14 @@ import React, { useState } from "react";
 
 const App = () => {
     const [persons, setPersons] = useState([
-        { name: "Arto Hellas", phone: "00000" }
+        { name: "Arto Hellas", number: "040-123456" },
+        { name: "Ada Lovelace", number: "39-44-5323523" },
+        { name: "Dan Abramov", number: "12-43-234345" },
+        { name: "Mary Poppendieck", number: "39-23-6423122" }
     ]);
     const [newName, setNewName] = useState("");
     const [newPhone, setNewPhone] = useState("");
+    const [search, setSearch] = useState("");
 
     const handleSubmit = event => {
         event.preventDefault();
@@ -26,10 +30,16 @@ const App = () => {
     const handleNewPhone = event => {
         setNewPhone(event.target.value);
     };
+    const handleSearch = event => {
+        setSearch(event.target.value);
+    };
 
     return (
         <div>
             <h2>Phonebook</h2>
+            {"filter with"}
+            <input value={search} onChange={handleSearch} />
+            <h2>add a new</h2>
             <form onSubmit={handleSubmit}>
                 <div>
                     name: <input value={newName} onChange={handleNewName} />
@@ -42,9 +52,13 @@ const App = () => {
                 </div>
             </form>
             <h2>Numbers</h2>
-            {persons.map(person => (
-                <Person person={person} key={person.name} />
-            ))}
+            {persons
+                .filter(person =>
+                    person.name.toLowerCase().includes(search.toLowerCase())
+                )
+                .map(person => (
+                    <Person person={person} key={person.name} />
+                ))}
         </div>
     );
 };
