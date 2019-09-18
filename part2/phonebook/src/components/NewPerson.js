@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import phonebookService from "../services/PhonebookService";
 
-const NewPerson = ({ persons, setPersons }) => {
+const NewPerson = ({ persons, setPersons, showMessage }) => {
     const [newName, setNewName] = useState("");
     const [newPhone, setNewPhone] = useState("");
 
@@ -24,6 +24,10 @@ const NewPerson = ({ persons, setPersons }) => {
                     setPersons(
                         persons.map(p => (p.id === updated.id ? updated : p))
                     );
+                    showMessage({
+                        message: `Number of ${updated.name} was updated.`,
+                        error: false
+                    });
                 });
         }
     };
@@ -40,6 +44,7 @@ const NewPerson = ({ persons, setPersons }) => {
                     setPersons(persons.concat(p));
                     setNewName("");
                     setNewPhone("");
+                    showMessage({ message: `${p.name} added.`, error: false });
                 });
         }
     };

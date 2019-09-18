@@ -2,10 +2,12 @@ import React, { useState, useEffect } from "react";
 import Persons from "./components/Persons";
 import NewPerson from "./components/NewPerson";
 import Search from "./components/Search";
+import Notification from "./components/Notification";
 import phonebookService from "./services/PhonebookService";
 
 const App = () => {
     const [persons, setPersons] = useState([]);
+    const [notification, setNotification] = useState(null);
 
     useEffect(() => {
         phonebookService.getAll().then(records => setPersons(records));
@@ -24,12 +26,20 @@ const App = () => {
         }
     };
 
+    const displayNotification = notification => {
+        setNotification(notification);
+        setTimeout(() => {
+            setNotification(null);
+        }, 5000);
+    };
+
     return (
         <div>
             <h2>Phonebook</h2>
+            <Notification notification={notification} />
             <Search search={search} handleSearch={handleSearch} />
             <h2>add a new</h2>
-            <NewPerson persons={persons} setPersons={setPersons} />
+            <NewPerson persons={persons} setPersons={setPersons} showMessage={displayNotification} />
             <h2>Numbers</h2>
             <Persons
                 persons={persons}
