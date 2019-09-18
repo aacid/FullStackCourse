@@ -12,10 +12,27 @@ const NewPerson = ({ persons, setPersons }) => {
         setNewPhone(event.target.value);
     };
 
+    const handleUpdate = person => {
+        if (
+            window.confirm(
+                `${person.name} is already in phonebook, update old number with ${newPhone}?`
+            )
+        ) {
+            phonebookService
+                .update({ ...person, number: newPhone })
+                .then(updated => {
+                    setPersons(
+                        persons.map(p => (p.id === updated.id ? updated : p))
+                    );
+                });
+        }
+    };
+
     const handleSubmit = event => {
         event.preventDefault();
-        if (persons.some(p => p.name === newName)) {
-            alert(`${newName} is already added.`);
+        const person = persons.find(p => p.name === newName);
+        if (person !== undefined) {
+            handleUpdate(person);
         } else {
             phonebookService
                 .create({ name: newName, number: newPhone })

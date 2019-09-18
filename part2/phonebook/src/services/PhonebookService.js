@@ -18,4 +18,11 @@ const deletePerson = id => {
         .catch(error => console.log("Can't delete.", error));
 };
 
-export default { getAll, create, deletePerson };
+const update = person => {
+    return axios
+        .put(`${baseUrl}/${person.id}`, person)
+        .then(response => response.data)
+        .catch(error => console.log(`Can't update ${person.name}.`, error));
+};
+
+export default { getAll, create, deletePerson, update };
