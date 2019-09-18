@@ -15,7 +15,14 @@ const App = () => {
 
     const handleSearch = event => {
         setSearch(event.target.value);
-    };    
+    };
+
+    const handleDelete = person => {
+        if (window.confirm(`Delete ${person.name}?`)) {
+            phonebookService.deletePerson(person.id);
+            setPersons(persons.filter(p => p.id !== person.id));
+        }
+    };
 
     return (
         <div>
@@ -24,7 +31,11 @@ const App = () => {
             <h2>add a new</h2>
             <NewPerson persons={persons} setPersons={setPersons} />
             <h2>Numbers</h2>
-            <Persons persons={persons} search={search} />
+            <Persons
+                persons={persons}
+                search={search}
+                handleDelete={handleDelete}
+            />
         </div>
     );
 };

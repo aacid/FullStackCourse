@@ -11,4 +11,11 @@ const create = person => {
     const request = axios.post(baseUrl, person);
     return request.then(response => response.data);
 };
-export default { getAll, create };
+
+const deletePerson = id => {
+    axios
+        .delete(`${baseUrl}/${id}`)
+        .catch(error => console.log("Can't delete.", error));
+};
+
+export default { getAll, create, deletePerson };

@@ -1,6 +1,6 @@
 import React from "react";
 
-const Persons = ({ persons, search }) => {
+const Persons = ({ persons, search, handleDelete }) => {
     if (persons.length === 0) {
         return <div>Nothing in phonebook so far.</div>;
     } else
@@ -8,13 +8,20 @@ const Persons = ({ persons, search }) => {
             .filter(person =>
                 person.name.toLowerCase().includes(search.toLowerCase())
             )
-            .map(person => <Person person={person} key={person.name} />);
+            .map(person => (
+                <Person
+                    person={person}
+                    handleDelete={() => handleDelete(person)}
+                    key={person.name}
+                />
+            ));
 };
 
-const Person = ({ person }) => {
+const Person = ({ person, handleDelete }) => {
     return (
         <p>
-            {person.name} {person.number}
+            {person.name} {person.number}{" "}
+            <button onClick={handleDelete}>delete</button>
         </p>
     );
 };
