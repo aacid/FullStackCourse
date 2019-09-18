@@ -2,22 +2,20 @@ import React, { useState, useEffect } from "react";
 import Persons from "./components/Persons";
 import NewPerson from "./components/NewPerson";
 import Search from "./components/Search";
-import axios from "axios";
+import phonebookService from "./services/PhonebookService";
 
 const App = () => {
     const [persons, setPersons] = useState([]);
 
     useEffect(() => {
-        axios.get("http://localhost:3001/persons").then(response => {
-            setPersons(response.data);
-        });
+        phonebookService.getAll().then(records => setPersons(records));
     }, []);
 
     const [search, setSearch] = useState("");
 
     const handleSearch = event => {
         setSearch(event.target.value);
-    };
+    };    
 
     return (
         <div>

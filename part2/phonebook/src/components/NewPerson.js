@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import phonebookService from "../services/PhonebookService";
 
 const NewPerson = ({ persons, setPersons }) => {
     const [newName, setNewName] = useState("");
@@ -16,11 +17,13 @@ const NewPerson = ({ persons, setPersons }) => {
         if (persons.some(p => p.name === newName)) {
             alert(`${newName} is already added.`);
         } else {
-            const newPerson = { name: newName, number: newPhone };
-            const newList = persons.concat(newPerson);
-            setPersons(newList);
-            setNewName("");
-            setNewPhone("");
+            phonebookService
+                .create({ name: newName, number: newPhone })
+                .then(p => {
+                    setPersons(persons.concat(p));
+                    setNewName("");
+                    setNewPhone("");
+                });
         }
     };
 
