@@ -21,7 +21,20 @@ const App = () => {
 
     const handleDelete = person => {
         if (window.confirm(`Delete ${person.name}?`)) {
-            phonebookService.deletePerson(person.id);
+            phonebookService
+                .deletePerson(person.id)
+                .then(response => {
+                    displayNotification({
+                        message: `${person.name} was sucessfully deleted from server.`,
+                        error: false
+                    });
+                })
+                .catch(error => {
+                    displayNotification({
+                        message: `Information of ${person.name} was already deleted from server.`,
+                        error: true
+                    });
+                });
             setPersons(persons.filter(p => p.id !== person.id));
         }
     };
@@ -39,7 +52,11 @@ const App = () => {
             <Notification notification={notification} />
             <Search search={search} handleSearch={handleSearch} />
             <h2>add a new</h2>
-            <NewPerson persons={persons} setPersons={setPersons} showMessage={displayNotification} />
+            <NewPerson
+                persons={persons}
+                setPersons={setPersons}
+                showMessage={displayNotification}
+            />
             <h2>Numbers</h2>
             <Persons
                 persons={persons}

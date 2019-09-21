@@ -13,16 +13,13 @@ const create = person => {
 };
 
 const deletePerson = id => {
-    axios
-        .delete(`${baseUrl}/${id}`)
-        .catch(error => console.log("Can't delete.", error));
+    return axios.delete(`${baseUrl}/${id}`);
 };
 
 const update = person => {
     return axios
         .put(`${baseUrl}/${person.id}`, person)
-        .then(response => response.data)
-        .catch(error => console.log(`Can't update ${person.name}.`, error));
+        .then(response => response.data);
 };
 
 export default { getAll, create, deletePerson, update };

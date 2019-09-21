@@ -28,6 +28,12 @@ const NewPerson = ({ persons, setPersons, showMessage }) => {
                         message: `Number of ${updated.name} was updated.`,
                         error: false
                     });
+                })
+                .catch(error => {
+                    showMessage({
+                        message: `Information of ${person.name} was already deleted from server.`,
+                        error: true
+                    });
                 });
         }
     };
