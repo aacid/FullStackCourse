@@ -51,6 +51,9 @@ const NewPerson = ({ persons, setPersons, showMessage }) => {
                     setNewName("");
                     setNewPhone("");
                     showMessage({ message: `${p.name} added.`, error: false });
+                })
+                .catch(error => {
+                    showMessage({ message: error, error: true });
                 });
         }
     };
