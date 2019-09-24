@@ -34,9 +34,26 @@ const mostBlogs = blogs => {
     return most;
 };
 
+const mostLikes = blogs => {
+    let map = {};
+    blogs.forEach(blog => {
+        map[blog.author] = map[blog.author] + blog.likes || blog.likes;
+    });
+
+    let most = { author: "dummy", likes: 0 };
+
+    for (let key in map) {
+        if (map[key] > most.likes) {
+            most = { author: key, likes: map[key] };
+        }
+    }
+    return most;
+};
+
 module.exports = {
     dummy,
     totalLikes,
     favoriteBlog,
-    mostBlogs
+    mostBlogs,
+    mostLikes
 };
