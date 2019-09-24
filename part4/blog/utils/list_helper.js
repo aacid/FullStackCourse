@@ -18,8 +18,25 @@ const favoriteBlog = blogs => {
     return favorite;
 };
 
+const mostBlogs = blogs => {
+    let map = {};
+    blogs.forEach(blog => {
+        map[blog.author] = map[blog.author] + 1 || 1;
+    });
+
+    let most = { author: "dummy", blogs: 0 };
+
+    for (let key in map) {
+        if (map[key] > most.blogs) {
+            most = { author: key, blogs: map[key] };
+        }
+    }
+    return most;
+};
+
 module.exports = {
     dummy,
     totalLikes,
-    favoriteBlog
+    favoriteBlog,
+    mostBlogs
 };

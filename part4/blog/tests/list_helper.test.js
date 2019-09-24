@@ -31,3 +31,21 @@ describe("favorite blog", () => {
         expect(result).toEqual(data.multipleBlogsInList[2]);
     });
 });
+
+describe("author with most blogs", () => {
+    test("single blog should return its author with one blog", () => {
+        const result = listHelper.mostBlogs(data.singleBlogInList);
+        expect(result).toEqual({
+            author: data.singleBlogInList[0].author,
+            blogs: 1
+        });
+    });
+
+    test("multiple blogs should return author with most blogs", () => {
+        const result = listHelper.mostBlogs(data.multipleBlogsInList);
+        expect(result).toEqual({
+            author: "Robert C. Martin",
+            blogs: 3
+        });
+    });
+});
