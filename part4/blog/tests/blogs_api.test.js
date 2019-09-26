@@ -98,6 +98,34 @@ describe("deletion of a blog", () => {
     });
 });
 
+describe("update of a blog", () => {
+    test("succeeds and title is updated", async () => {
+        const blogsAtStart = await helper.blogsInDb();
+        const blogToUpdate = blogsAtStart[0];
+        const newTitle = { title: "new updated title" };
+
+        const updatedBlog = await api
+            .put(`/api/blogs/${blogToUpdate.id}`)
+            .send(newTitle)
+            .expect(200);
+
+        expect(updatedBlog.body.title).toBe(newTitle.title);
+    });
+
+    test("succeeds and likes are updated", async () => {
+        const blogsAtStart = await helper.blogsInDb();
+        const blogToUpdate = blogsAtStart[0];
+        const newLikes = { likes: blogToUpdate.likes + 1 };
+
+        const updatedBlog = await api
+            .put(`/api/blogs/${blogToUpdate.id}`)
+            .send(newLikes)
+            .expect(200);
+
+        expect(updatedBlog.body.likes).toBe(newLikes.likes);
+    });
+});
+
 afterAll(() => {
     mongoose.connection.close();
 });
