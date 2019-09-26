@@ -66,6 +66,17 @@ test("default likes is 0", async () => {
     expect(response.body.likes).toBe(0);
 });
 
+test("return 400 if title or url missing", async () => {
+    const newBlog = {
+        author: "tester"
+    };
+    await api
+        .post("/api/blogs")
+        .send(newBlog)
+        .expect(400)
+        .expect("Content-Type", /application\/json/);
+});
+
 afterAll(() => {
     mongoose.connection.close();
 });
