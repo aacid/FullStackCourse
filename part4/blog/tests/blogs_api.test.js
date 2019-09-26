@@ -23,8 +23,32 @@ test("blogs are returned as json", async () => {
 });
 
 test("blog has id", async () => {
-    const respone = await api.get("/api/blogs").expect(200);
+    const respone = await api
+        .get("/api/blogs")
+        .expect(200)
+        .expect("Content-Type", /application\/json/);
     expect(respone.body[0].id).toBeDefined();
+});
+
+test("new blog successfully added", async () => {
+    const newBlog = {
+        title: "test blog",
+        author: "tester",
+        url: "dummy_url",
+        likes: 0
+    };
+    await api
+        .post("/api/blogs")
+        .send(newBlog)
+        .expect(201)
+        .expect("Content-Type", /application\/json/);
+
+    const response = await api.get("/api/blogs");
+
+    const titles = response.body.map(r => r.title);
+
+    expect(response.body.length).toBe(initialBlogs.length + 1);
+    expect(titles).toContain("test blog");
 });
 
 afterAll(() => {
