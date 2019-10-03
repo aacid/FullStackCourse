@@ -33,4 +33,22 @@ describe("add user to database", () => {
         expect(usersAtEnd.length).toBe(usersAtStart.length + 1);
         expect(usernames).toContain(demoUsers[0].username);
     });
+    test("fails if username too short", async () => {
+        const response = await api
+            .post("/api/users")
+            .send({ ...demoUsers[0], username: "aa" })
+            .expect(400)
+            .expect("Content-Type", /application\/json/);
+        expect(response.body.error).toContain("User validation failed");
+    });
+    test("fails if password too short", async () => {
+        const response = await api
+            .post("/api/users")
+            .send({ ...demoUsers[0], password: "aa" })
+            .expect(400)
+            .expect("Content-Type", /application\/json/);
+        expect(response.body.error).toBe(
+            "password should be at least 3 characters long."
+        );
+    });
 });
