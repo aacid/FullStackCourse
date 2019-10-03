@@ -64,4 +64,17 @@ const singleBlogInList = [
     }
 ];
 
-module.exports = { multipleBlogsInList, singleBlogInList };
+const demoUsers = [
+    {
+        username: "karol",
+        password: "Pass1234",
+        name: "Karolko"
+    },
+    {
+        username: "fero",
+        password: "1$Pf44Gg",
+        name: "Mega Fero"
+    }
+];
+
+module.exports = { multipleBlogsInList, singleBlogInList, demoUsers };

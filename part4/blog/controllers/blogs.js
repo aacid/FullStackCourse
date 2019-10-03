@@ -1,3 +1,4 @@
+const logger = require("../utils/logger");
 const blogsRouter = require("express").Router();
 const Blog = require("../models/blog");
 
@@ -7,6 +8,7 @@ blogsRouter.get("/", async (request, response) => {
 });
 
 blogsRouter.post("/", async (request, response, next) => {
+    logger.info(request.body);
     const blog = new Blog(request.body);
 
     try {
