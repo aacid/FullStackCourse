@@ -3,7 +3,6 @@ content-type: application/json
 
 {
     "title": "Test",
-    "author": "Oliver",
     "url": "http://localhost",
     "likes": 0
 }
