@@ -13,7 +13,7 @@ blogsRouter.post("/", async (request, response, next) => {
         const user = await User.findOne();
 
         if (user._id === undefined) {
-            response.status(500).json({ error: "user not found" });
+            return response.status(500).json({ error: "user not found" });
         }
         const blog = new Blog({
             title: request.body.title,
@@ -24,7 +24,7 @@ blogsRouter.post("/", async (request, response, next) => {
         const result = await blog.save();
         user.blogs = user.blogs.concat(result.id);
         await user.save();
-        response.status(201).json(result);
+        return response.status(201).json(result);
     } catch (exception) {
         next(exception);
     }

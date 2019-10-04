@@ -13,7 +13,7 @@ usersRouter.post("/", async (request, response, next) => {
         const body = request.body;
 
         if (body.password.length < 3) {
-            response.status(400).json({
+            return response.status(400).json({
                 error: "password should be at least 3 characters long."
             });
         }
@@ -26,7 +26,7 @@ usersRouter.post("/", async (request, response, next) => {
             passwordHash
         });
         const result = await user.save();
-        response.status(201).json(result);
+        return response.status(201).json(result);
     } catch (exception) {
         next(exception);
     }
