@@ -11,13 +11,32 @@ const App = () => {
         blogsService.getAll().then(blogs => setBlogs(blogs));
     }, []);
 
+    useEffect(() => {
+        const loggedUser = window.localStorage.getItem("user");
+        console.log(loggedUser);
+        if (loggedUser !== null) {
+            setUser(JSON.parse(loggedUser));
+        } else {
+            setUser(null);
+        }
+    }, []);
+
     if (user === null) {
-        return <Login setCredentials={setUser} />;
+        return <Login setUser={setUser} />;
     }
     return (
         <div>
             <h3>Blogs</h3>
-            <p>{user.name} logged in.</p>
+            <p>
+                {user.name} logged in.{" "}
+                <Button
+                    handleClick={() => {
+                        window.localStorage.removeItem("user");
+                        setUser(null);
+                    }}
+                    text="logout"
+                />
+            </p>
             <BlogList blogs={blogs} />
         </div>
     );
@@ -32,4 +51,9 @@ const BlogList = ({ blogs }) => {
         </div>
     );
 };
+
+const Button = ({ handleClick, text }) => (
+    <button onClick={handleClick}>{text}</button>
+);
+
 export default App;
