@@ -1,8 +1,16 @@
 const logger = require("./logger");
 
 const requestLogger = (request, response, next) => {
-    logger.info("Method:", request.method);
-    logger.info("Path:  ", request.path);
+    const currentDatetime = new Date().toLocaleString("en-GB", {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hour12: false
+    });
+    logger.info(`${currentDatetime} ${request.method} ${request.path}`);
     logger.info("Body:  ", request.body);
     logger.info("---");
     next();
