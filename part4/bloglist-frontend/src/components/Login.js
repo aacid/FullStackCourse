@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import loginService from "../services/login";
+import blogService from "../services/blogs";
 
 const Login = ({ setUser }) => {
     const [username, setUsername] = useState("");
@@ -8,10 +9,10 @@ const Login = ({ setUser }) => {
     const handleLogin = async event => {
         event.preventDefault();
         try {
-            console.log("logging in with", username, password);
             const user = await loginService.login({ username, password });
             window.localStorage.setItem("user", JSON.stringify(user));
             setUser(user);
+            blogService.setToken(user.token);
             setUsername("");
             setPassword("");
         } catch (error) {

@@ -6,7 +6,7 @@ const Blog = ({ blog }) => {
             <p>
                 <a href={blog.url}>link</a>
             </p>
-            <p>Autor: {blog.user.name}</p>
+            <p>Autor: {blog.author}</p>
         </div>
     );
 };
