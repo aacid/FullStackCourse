@@ -1,15 +1,24 @@
 import React, { useState } from "react";
 import blogService from "../services/blogs";
 
-const NewBlog = () => {
+const NewBlog = ({ displayNotification }) => {
     const [title, setTitle] = useState("");
     const [author, setAuthor] = useState("");
     const [url, setUrl] = useState("");
 
-    const handleSubmit = event => {
+    const handleSubmit = async event => {
         event.preventDefault();
-
-        blogService.postNew({ title, author, url });
+        try {
+            await blogService.postNew({ title, author, url });
+            displayNotification({
+                message: `new blog ${title} by ${author} added.`
+            });
+        } catch (error) {
+            displayNotification({
+                message: error.response.data.error,
+                error: true
+            });
+        }
     };
     return (
         <div>

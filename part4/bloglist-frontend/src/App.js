@@ -3,10 +3,12 @@ import blogsService from "./services/blogs";
 import Blog from "./components/Blog";
 import Login from "./components/Login";
 import NewBlog from "./components/NewBlog";
+import Notification from "./components/Notification";
 
 const App = () => {
     const [blogs, setBlogs] = useState([]);
     const [user, setUser] = useState({});
+    const [notification, setNotification] = useState(null);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -27,24 +29,46 @@ const App = () => {
         }
     }, []);
 
-    if (user === null) {
-        return <Login setUser={setUser} />;
-    }
+    const displayNotification = notification => {
+        setNotification(notification);
+        setTimeout(() => {
+            setNotification(null);
+        }, 5000);
+    };
+
+    const loginForm = () => {
+        return (
+            <Login
+                setUser={setUser}
+                displayNotification={displayNotification}
+            />
+        );
+    };
+
+    const mainPage = () => {
+        return (
+            <div>
+                <h3>Blogs</h3>
+                <p>
+                    {user.name} logged in.{" "}
+                    <Button
+                        handleClick={() => {
+                            window.localStorage.removeItem("user");
+                            setUser(null);
+                        }}
+                        text="logout"
+                    />
+                </p>
+                <NewBlog displayNotification={displayNotification} />
+                <BlogList blogs={blogs} />
+            </div>
+        );
+    };
     return (
         <div>
-            <h3>Blogs</h3>
-            <p>
-                {user.name} logged in.{" "}
-                <Button
-                    handleClick={() => {
-                        window.localStorage.removeItem("user");
-                        setUser(null);
-                    }}
-                    text="logout"
-                />
-            </p>
-            <NewBlog />
-            <BlogList blogs={blogs} />
+            <Notification notification={notification} />
+            {user === null && loginForm()}
+            {user !== null && mainPage()}
         </div>
     );
 };

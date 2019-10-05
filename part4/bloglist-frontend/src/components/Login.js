@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import loginService from "../services/login";
 import blogService from "../services/blogs";
 
-const Login = ({ setUser }) => {
+const Login = ({ setUser, displayNotification }) => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
 
@@ -11,12 +11,15 @@ const Login = ({ setUser }) => {
         try {
             const user = await loginService.login({ username, password });
             window.localStorage.setItem("user", JSON.stringify(user));
-            setUser(user);
             blogService.setToken(user.token);
             setUsername("");
             setPassword("");
+            setUser(user);
         } catch (error) {
-            console.log(error);
+            displayNotification({
+                message: error.response.data.error,
+                error: true
+            });
         }
     };
     return (
