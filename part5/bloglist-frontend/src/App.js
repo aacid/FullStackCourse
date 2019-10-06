@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import blogsService from "./services/blogs";
+import blogService from "./services/blogs";
 import Blog from "./components/Blog";
 import Login from "./components/Login";
 import NewBlog from "./components/NewBlog";
@@ -14,7 +14,7 @@ const App = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-            const blogs = await blogsService.getAll();
+            const blogs = await blogService.getAll();
             setBlogs(blogs.sort((a, b) => b.likes - a.likes));
         };
         fetchData();
@@ -25,7 +25,7 @@ const App = () => {
         if (loggedUserJSON !== null) {
             const loggedUser = JSON.parse(loggedUserJSON);
             setUser(loggedUser);
-            blogsService.setToken(loggedUser.token);
+            blogService.setToken(loggedUser.token);
         } else {
             setUser(null);
         }
@@ -62,9 +62,17 @@ const App = () => {
                     />
                 </p>
                 <Toggable buttonLabel="create blog">
-                    <NewBlog displayNotification={displayNotification} />
+                    <NewBlog
+                        blogs={blogs}
+                        setBlogs={setBlogs}
+                        displayNotification={displayNotification}
+                    />
                 </Toggable>
-                <BlogList blogs={blogs} />
+                <BlogList
+                    blogs={blogs}
+                    setBlogs={setBlogs}
+                    displayNotification={displayNotification}
+                />
             </div>
         );
     };
@@ -77,11 +85,23 @@ const App = () => {
     );
 };
 
-const BlogList = ({ blogs }) => {
+const BlogList = ({ blogs, setBlogs, displayNotification }) => {
+    const deleteBlog = async blog => {
+        if (window.confirm(`remove blog ${blog.title} by ${blog.author}?`)) {
+            const result = await blogService.deleteBlog(blog.id);
+            if (result) {
+                setBlogs(blogs.filter(b => b.id !== blog.id));
+                displayNotification({
+                    message: `blog ${blog.title} by ${blog.author} removed.`,
+                    error: false
+                });
+            }
+        }
+    };
     return (
         <div>
             {blogs.map(blog => (
-                <Blog key={blog.id} blog={blog} />
+                <Blog key={blog.id} blog={blog} deleteBlog={deleteBlog} />
             ))}
         </div>
     );

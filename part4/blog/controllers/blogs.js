@@ -33,7 +33,11 @@ blogsRouter.post("/", async (request, response, next) => {
         const result = await blog.save();
         user.blogs = user.blogs.concat(result.id);
         await user.save();
-        return response.status(201).json(result);
+        const { blogs, ...cleanUser } = user.toJSON();
+        return response.status(201).json({
+            ...result.toJSON(),
+            user: cleanUser
+        });
     } catch (exception) {
         next(exception);
     }
@@ -55,6 +59,13 @@ blogsRouter.delete("/:id", async (request, response, next) => {
         }
 
         await Blog.findByIdAndDelete(request.params.id);
+        const user = await User.findById(blog.user);
+        console.log("before filter", user.blogs);
+        user.blogs = user.blogs.filter(
+            b => b._id.toString() !== blog._id.toString()
+        );
+        console.log("after filter", user.blogs);
+        await user.save();
 
         response.status(204).end();
     } catch (exception) {

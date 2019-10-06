@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import blogService from "../services/blogs";
 
-const NewBlog = ({ displayNotification }) => {
+const NewBlog = ({ blogs, setBlogs, displayNotification }) => {
     const [title, setTitle] = useState("");
     const [author, setAuthor] = useState("");
     const [url, setUrl] = useState("");
@@ -9,10 +9,12 @@ const NewBlog = ({ displayNotification }) => {
     const handleSubmit = async event => {
         event.preventDefault();
         try {
-            await blogService.postNew({ title, author, url });
+            const response = await blogService.postNew({ title, author, url });
             displayNotification({
                 message: `new blog ${title} by ${author} added.`
             });
+
+            setBlogs(blogs.concat(response));
         } catch (error) {
             displayNotification({
                 message: error.response.data.error,

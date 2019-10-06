@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Button from "./utility/Button";
 import blogService from "../services/blogs";
 
-const Blog = ({ blog }) => {
+const Blog = ({ blog, deleteBlog }) => {
     const [visible, setVisible] = useState(false);
     const [likes, setLikes] = useState(blog.likes);
     const increaseLikes = async () => {
@@ -23,6 +23,7 @@ const Blog = ({ blog }) => {
                     <Button handleClick={increaseLikes} text="like" />
                 </p>
                 <p className="blog-creator">added by {blog.user.name}</p>
+                <Button handleClick={() => deleteBlog(blog)} text="delete" />
             </div>
         </div>
     );
