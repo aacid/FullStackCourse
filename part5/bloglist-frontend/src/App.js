@@ -15,7 +15,7 @@ const App = () => {
     useEffect(() => {
         const fetchData = async () => {
             const blogs = await blogsService.getAll();
-            setBlogs(blogs);
+            setBlogs(blogs.sort((a, b) => b.likes - a.likes));
         };
         fetchData();
     }, []);
