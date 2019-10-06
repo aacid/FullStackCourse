@@ -3,7 +3,9 @@ import blogsService from "./services/blogs";
 import Blog from "./components/Blog";
 import Login from "./components/Login";
 import NewBlog from "./components/NewBlog";
-import Notification from "./components/Notification";
+import Notification from "./components/utility/Notification";
+import Button from "./components/utility/Button";
+import Toggable from "./components/utility/Toggable";
 
 const App = () => {
     const [blogs, setBlogs] = useState([]);
@@ -59,7 +61,9 @@ const App = () => {
                         text="logout"
                     />
                 </p>
-                <NewBlog displayNotification={displayNotification} />
+                <Toggable buttonLabel="create blog">
+                    <NewBlog displayNotification={displayNotification} />
+                </Toggable>
                 <BlogList blogs={blogs} />
             </div>
         );
@@ -82,9 +86,5 @@ const BlogList = ({ blogs }) => {
         </div>
     );
 };
-
-const Button = ({ handleClick, text }) => (
-    <button onClick={handleClick}>{text}</button>
-);
 
 export default App;
