@@ -14,6 +14,9 @@ const NewBlog = ({ blogs, setBlogs, displayNotification }) => {
                 message: `new blog ${title} by ${author} added.`
             });
 
+            setTitle("");
+            setAuthor("");
+            setUrl("");
             setBlogs(blogs.concat(response));
         } catch (error) {
             displayNotification({

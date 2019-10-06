@@ -9,6 +9,9 @@ const Blog = ({ blog, deleteBlog }) => {
         const result = await blogService.increaseLikes({ ...blog, likes });
         setLikes(result.likes);
     };
+    const user = JSON.parse(window.localStorage.getItem("user"));
+    const canDelete = user.username === blog.user.username;
+
     return (
         <div className="blog">
             <p className="blog-title" onClick={() => setVisible(!visible)}>
@@ -23,7 +26,12 @@ const Blog = ({ blog, deleteBlog }) => {
                     <Button handleClick={increaseLikes} text="like" />
                 </p>
                 <p className="blog-creator">added by {blog.user.name}</p>
-                <Button handleClick={() => deleteBlog(blog)} text="delete" />
+                {canDelete && (
+                    <Button
+                        handleClick={() => deleteBlog(blog)}
+                        text="delete"
+                    />
+                )}
             </div>
         </div>
     );
