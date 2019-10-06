@@ -1,7 +1,14 @@
 import React, { useState } from "react";
 import Button from "./utility/Button";
+import blogService from "../services/blogs";
+
 const Blog = ({ blog }) => {
     const [visible, setVisible] = useState(false);
+    const [likes, setLikes] = useState(blog.likes);
+    const increaseLikes = async () => {
+        const result = await blogService.increaseLikes({ ...blog, likes });
+        setLikes(result.likes);
+    };
     return (
         <div className="blog">
             <p className="blog-title" onClick={() => setVisible(!visible)}>
@@ -12,7 +19,8 @@ const Blog = ({ blog }) => {
                     <a href={blog.url}>{blog.url}</a>
                 </p>
                 <p>
-                    {blog.likes} likes <Button handleClick={null} text="like" />
+                    {likes} likes{" "}
+                    <Button handleClick={increaseLikes} text="like" />
                 </p>
                 <p className="blog-creator">added by {blog.user.name}</p>
             </div>

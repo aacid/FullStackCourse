@@ -19,4 +19,19 @@ const postNew = async blogPost => {
     return response.data;
 };
 
-export default { getAll, postNew, setToken };
+const increaseLikes = async blogPost => {
+    const updatedBlog = {
+        ...blogPost,
+        user: blogPost.user.id,
+        likes: blogPost.likes + 1
+    };
+
+    const response = await axios.put(
+        `${baseUrl}\\${blogPost.id}`,
+        updatedBlog,
+        { headers: { Authorization: token } }
+    );
+    return response.data;
+};
+
+export default { getAll, postNew, setToken, increaseLikes };
