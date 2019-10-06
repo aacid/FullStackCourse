@@ -25,43 +25,47 @@ const NewBlog = ({ displayNotification }) => {
             <h3>create new</h3>
             <form onSubmit={handleSubmit}>
                 <table>
-                    <tr>
-                        <td>title:</td>
-                        <td>
-                            <input
-                                type="text"
-                                value={title}
-                                name="Title"
-                                onChange={({ target }) =>
-                                    setTitle(target.value)
-                                }
-                            />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>author:</td>
-                        <td>
-                            <input
-                                type="text"
-                                value={author}
-                                name="Author"
-                                onChange={({ target }) =>
-                                    setAuthor(target.value)
-                                }
-                            />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>url:</td>
-                        <td>
-                            <input
-                                type="text"
-                                value={url}
-                                name="Password"
-                                onChange={({ target }) => setUrl(target.value)}
-                            />
-                        </td>
-                    </tr>
+                    <tbody>
+                        <tr>
+                            <td>title:</td>
+                            <td>
+                                <input
+                                    type="text"
+                                    value={title}
+                                    name="Title"
+                                    onChange={({ target }) =>
+                                        setTitle(target.value)
+                                    }
+                                />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>author:</td>
+                            <td>
+                                <input
+                                    type="text"
+                                    value={author}
+                                    name="Author"
+                                    onChange={({ target }) =>
+                                        setAuthor(target.value)
+                                    }
+                                />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>url:</td>
+                            <td>
+                                <input
+                                    type="text"
+                                    value={url}
+                                    name="Password"
+                                    onChange={({ target }) =>
+                                        setUrl(target.value)
+                                    }
+                                />
+                            </td>
+                        </tr>
+                    </tbody>
                 </table>
                 <button type="submit">create</button>
             </form>

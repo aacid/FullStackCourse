@@ -34,3 +34,24 @@ code {
 .hidden {
     display: none;
 }
+
+.blog {
+    border-style: solid;
+    border-width: 2px;
+    margin: 10px;
+    padding: 15px;
+    background-color: orangered;
+    max-width: 400px;
+}
+
+.blog-title {
+    font-size: 1.7em;
+    margin-block-start: 0em;
+    margin-block-end: 0em;
+}
+.blog a {
+    font-size: 1.2em;
+}
+.blog-creator {
+    font-size: 0.8em;
+}
